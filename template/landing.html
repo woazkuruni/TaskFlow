@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TaskFlow is a simple Django task manager with deadlines, countdowns and reminders.">
+    <title>TaskFlow | Plan your day</title>
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/theme.js' %}"></script>
+</head>
+<body class="landing-page">
+    <main class="landing-shell">
+        <header class="landing-nav">
+            <a href="{% url 'home' %}" class="landing-brand">
+                <span class="brand-icon"><i class="fa-solid fa-check"></i></span>
+                <span class="landing-brand-copy">
+                    <strong>TaskFlow</strong>
+                    <small>Personal task manager</small>
+                </span>
+            </a>
+
+            <div class="landing-nav-actions">
+                <button type="button" class="theme-switch" data-theme-toggle>
+                    <span class="theme-switch-icon" data-theme-icon aria-hidden="true"></span>
+                </button>
+
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'tasks' %}" class="landing-nav-link">My Tasks</a>
+                <a href="{% url 'profile' %}" class="landing-nav-link landing-nav-link-soft">Profile</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="landing-nav-link">Login</a>
+                <a href="{% url 'register' %}" class="landing-nav-link landing-nav-link-primary">Create Account</a>
+                {% endif %}
+            </div>
+        </header>
+
+        <section class="landing-hero">
+            <div class="landing-hero-copy">
+                <span class="landing-kicker"><i class="fa-regular fa-circle-check"></i> SIMPLE TASK MANAGEMENT</span>
+                <h1>Keep your tasks clear and your deadlines visible.</h1>
+                <p>TaskFlow helps you add tasks, set due dates, watch live countdowns and receive reminders without making the workflow complicated.</p>
+
+                <div class="landing-hero-actions">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'tasks' %}" class="landing-primary-btn">Go to My Tasks <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'profile' %}" class="landing-secondary-btn">Profile</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="landing-primary-btn">Login <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{% url 'register' %}" class="landing-secondary-btn">Create Account</a>
+                    {% endif %}
+                </div>
+
+                {% if request.user.is_authenticated %}
+                <p class="landing-user-note">Signed in as <strong>{{ request.user.username }}</strong> · <a href="{% url 'logout' %}">Log out</a></p>
+                {% else %}
+                <p class="landing-user-note">Create an account to keep your tasks separate and receive email reminders.</p>
+                {% endif %}
+            </div>
+
+            <div class="landing-preview" aria-label="TaskFlow preview">
+                <div class="preview-top">
+                    <span><i class="fa-solid fa-circle"></i> Today</span>
+                    <span class="preview-status">3 tasks</span>
+                </div>
+                <div class="preview-task">
+                    <span class="preview-check"></span>
+                    <div>
+                        <strong>Finish project report</strong>
+                        <small>Due today · 9:00 AM</small>
+                    </div>
+                    <span class="preview-countdown"><span class="landing-hourglass"><i class="fa-solid fa-hourglass-half"></i></span> 2h 18m</span>
+                </div>
+                <div class="preview-task">
+                    <span class="preview-check"></span>
+                    <div>
+                        <strong>Review class notes</strong>
+                        <small>Reminder · 1 hour before</small>
+                    </div>
+                    <span class="preview-countdown soft"><i class="fa-regular fa-bell"></i> Ready</span>
+                </div>
+                <div class="preview-task preview-task-done">
+                    <span class="preview-check checked"><i class="fa-solid fa-check"></i></span>
+                    <div>
+                        <strong>Submit assignment</strong>
+                        <small>Completed</small>
+                    </div>
+                    <span class="preview-countdown done"><i class="fa-solid fa-check"></i> Done</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-features">
+            <article class="landing-feature-card">
+                <span class="feature-icon"><i class="fa-regular fa-calendar-check"></i></span>
+                <h2>Deadlines that stay visible</h2>
+                <p>Add a due date and time. New tasks start with 9:00 AM and you can change it whenever you need.</p>
+            </article>
+            <article class="landing-feature-card">
+                <span class="feature-icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                <h2>Live countdown</h2>
+                <p>See how much time is left directly on each task card, with a clear overdue state when time runs out.</p>
+            </article>
+            <article class="landing-feature-card">
+                <span class="feature-icon"><i class="fa-regular fa-bell"></i></span>
+                <h2>Useful reminders</h2>
+                <p>Turn browser reminders on or off and optionally receive email reminders for scheduled tasks.</p>
+            </article>
+            <article class="landing-feature-card">
+                <span class="feature-icon"><i class="fa-regular fa-moon"></i></span>
+                <h2>Day and night mode</h2>
+                <p>Your theme choice stays consistent across the landing page, login, profile and task dashboard.</p>
+            </article>
+        </section>
+
+        <section class="landing-bottom-card">
+            <div>
+                <span class="landing-kicker">READY WHEN YOU ARE</span>
+                <h2>{% if request.user.is_authenticated %}Continue with your task list.{% else %}Start with a simple account.{% endif %}</h2>
+                <p>No complicated setup. Add a task, choose a deadline and keep moving.</p>
+            </div>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'tasks' %}" class="landing-primary-btn">Open My Tasks</a>
+            {% else %}
+            <a href="{% url 'register' %}" class="landing-primary-btn">Create Account</a>
+            {% endif %}
+        </section>
+
+        <footer class="landing-footer">Built with Django &amp; SQLite · TaskFlow</footer>
+    </main>
+</body>
+</html>

@@ -1,0 +1,20 @@
+TaskFlow email reminders
+========================
+
+The project uses Django's console email backend by default, so reminder emails are printed in the terminal while developing.
+
+For real Gmail SMTP delivery, set these environment variables before running Django:
+
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_google_app_password
+DEFAULT_FROM_EMAIL=TaskFlow <your_email@gmail.com>
+
+Then run this command on a schedule (for example every minute with Windows Task Scheduler):
+
+python manage.py send_task_reminders
+
+Use a Google App Password instead of your normal Gmail password.

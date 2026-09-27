@@ -1,0 +1,1488 @@
+/* TaskFlow admin polish - keeps the default Django admin behaviour intact. */
+:root,
+html[data-theme="light"],
+html[data-theme="dark"] {
+    color-scheme: light !important;
+    --primary: #5b67ee;
+    --secondary: #26344d;
+    --accent: #5b67ee;
+    --primary-fg: #ffffff;
+    --body-fg: #1f2937;
+    --body-bg: #f4f6fb;
+    --body-quiet-color: #697386;
+    --body-loud-color: #111827;
+    --header-color: #1f2937;
+    --header-branding-color: #111827;
+    --header-bg: #ffffff;
+    --header-link-color: #4b5563;
+    --breadcrumbs-fg: #667085;
+    --breadcrumbs-link-fg: #5b67ee;
+    --breadcrumbs-bg: transparent;
+    --link-fg: #5360df;
+    --link-hover-color: #414dc7;
+    --link-selected-fg: #414dc7;
+    --hairline-color: #e5e9f2;
+    --border-color: #e1e6ef;
+    --error-fg: #c54855;
+    --message-success-bg: #eef9f4;
+    --message-warning-bg: #fff8e8;
+    --message-error-bg: #fff0f1;
+    --darkened-bg: #f8f9fc;
+    --selected-bg: #eef0ff;
+    --selected-row: #f7f8ff;
+    --button-fg: #ffffff;
+    --button-bg: #5b67ee;
+    --button-hover-bg: #4753d8;
+    --default-button-bg: #5b67ee;
+    --default-button-hover-bg: #4753d8;
+    --close-button-bg: #667085;
+    --close-button-hover-bg: #4b5563;
+    --delete-button-bg: #d95864;
+    --delete-button-hover-bg: #bd4651;
+    --object-tools-fg: #4d58d3;
+    --object-tools-bg: #eef0ff;
+    --object-tools-hover-bg: #e0e4ff;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f4f6fb !important;
+    color: #1f2937 !important;
+}
+
+body { min-width: 0; }
+
+.theme-toggle { display: none !important; }
+
+#container {
+    min-width: 0;
+    background: #f4f6fb;
+}
+
+#header {
+    min-height: 74px;
+    padding: 0 28px;
+    background: #ffffff !important;
+    border-bottom: 1px solid #e5e9f2;
+    box-shadow: 0 4px 18px rgba(25, 35, 58, .045);
+    color: #1f2937 !important;
+}
+
+#branding { display: flex; align-items: center; min-width: 220px; }
+.taskflow-admin-brand { display: flex; align-items: center; }
+
+.taskflow-admin-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #162033 !important;
+    text-decoration: none !important;
+}
+
+.taskflow-admin-logo-mark {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: linear-gradient(145deg, #6571f2, #5260e6);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgba(82, 96, 230, .24);
+}
+
+.taskflow-brand-copy strong {
+    display: block;
+    color: #172033;
+    font-size: 17px;
+    line-height: 1.15;
+    font-weight: 700;
+}
+
+.taskflow-brand-copy small {
+    display: block;
+    margin-top: 4px;
+    color: #8590a3;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+#user-tools {
+    margin-left: auto;
+    color: #667085 !important;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    line-height: 1.7;
+}
+
+#user-tools strong { color: #27324a !important; }
+#user-tools a { color: #4e5bd8 !important; text-decoration: none; }
+#user-tools a:hover { color: #303db8 !important; }
+#user-tools button { color: #4e5bd8 !important; font-weight: 600; }
+
+.taskflow-admin-links {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.taskflow-admin-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid #dde3ed;
+    border-radius: 10px;
+    background: #f8f9fc;
+    color: #344054 !important;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .18s ease;
+}
+
+.taskflow-admin-links a:hover {
+    border-color: #cfd5ff;
+    background: #f0f2ff;
+    color: #4e5bd8 !important;
+}
+
+div.breadcrumbs {
+    padding: 13px 28px;
+    background: transparent !important;
+    color: #7c879a !important;
+    font-size: 11px;
+}
+div.breadcrumbs a { color: #5360df !important; font-weight: 600; }
+
+#content {
+    padding: 22px 28px 42px;
+}
+
+#content h1 {
+    margin: 0 0 22px;
+    color: #172033 !important;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+}
+
+#content h2, #content h3 { color: #253047 !important; }
+
+/* Dashboard */
+.taskflow-dashboard #content { max-width: 1240px; margin: 0 auto; width: 100%; }
+.taskflow-dashboard-main { width: 100%; }
+
+.taskflow-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e7f0;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+    box-shadow: 0 12px 34px rgba(27, 39, 69, .05);
+}
+
+.taskflow-eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: #5965e8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.taskflow-welcome h1 {
+    margin: 0 0 8px !important;
+    font-size: 26px !important;
+}
+
+.taskflow-welcome p,
+.taskflow-panel-heading p {
+    margin: 0;
+    color: #7c8798;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.taskflow-open-app {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 15px;
+    border-radius: 10px;
+    background: #5b67ee;
+    color: #fff !important;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 8px 18px rgba(91,103,238,.18);
+}
+.taskflow-open-app:hover { background: #4955d6; }
+.taskflow-open-app span { font-size: 16px; line-height: 1; }
+
+.taskflow-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(300px, .75fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.taskflow-panel {
+    overflow: hidden;
+    border: 1px solid #e2e7f0;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 12px 34px rgba(27, 39, 69, .045);
+}
+
+.taskflow-panel-heading {
+    padding: 19px 21px;
+    border-bottom: 1px solid #edf0f5;
+    background: #fbfcfe;
+}
+
+.taskflow-panel-heading h2 {
+    margin: 0 0 5px;
+    color: #202a40 !important;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.taskflow-app-list { padding: 14px; }
+.taskflow-app-group + .taskflow-app-group { margin-top: 13px; }
+
+.taskflow-app-group {
+    border: 1px solid #e8ebf2;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.taskflow-app-title-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px 15px;
+    background: #f8f9fc;
+    border-bottom: 1px solid #eceff5;
+}
+
+.taskflow-app-icon {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 34px;
+    border-radius: 10px;
+    background: #e9ecff;
+    color: #4d59d8;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.taskflow-app-title-row h3 {
+    margin: 0 0 2px;
+    color: #263149 !important;
+    font-size: 12px;
+    font-weight: 750;
+    text-transform: none;
+}
+.taskflow-app-title-row span { color: #8992a3; font-size: 10px; }
+
+.taskflow-model-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 54px;
+    padding: 9px 14px;
+}
+.taskflow-model-row + .taskflow-model-row { border-top: 1px solid #eff1f6; }
+.taskflow-model-row:hover { background: #fbfcff; }
+
+.taskflow-model-info { display: flex; align-items: center; min-width: 0; gap: 9px; }
+.taskflow-model-info a,
+.taskflow-model-info > span:last-child {
+    color: #344054 !important;
+    font-size: 12px;
+    font-weight: 650;
+    text-decoration: none;
+}
+.taskflow-model-info a:hover { color: #4e5bd8 !important; }
+
+.taskflow-model-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: #6b76ec;
+    box-shadow: 0 0 0 4px #eef0ff;
+}
+
+.taskflow-model-actions { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+.taskflow-action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1px solid #e0e4ec;
+    border-radius: 8px;
+    background: #fff;
+    color: #5e687b !important;
+    font-size: 10px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.taskflow-action:hover { border-color: #ccd2ff; background: #f5f6ff; color: #4d59d8 !important; }
+.taskflow-action-add { border-color: #d8ddff; background: #f0f2ff; color: #4d59d8 !important; }
+
+.taskflow-recent-list { padding: 8px 15px 12px; }
+.taskflow-recent-item {
+    display: flex;
+    gap: 11px;
+    padding: 12px 4px;
+}
+.taskflow-recent-item + .taskflow-recent-item { border-top: 1px solid #eef1f5; }
+
+.taskflow-recent-icon {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 30px;
+    border-radius: 9px;
+    background: #eef0ff;
+    color: #5360df;
+    font-size: 13px;
+    font-weight: 800;
+}
+.taskflow-recent-icon.is-add { background: #edf9f3; color: #2f8f69; }
+.taskflow-recent-icon.is-delete { background: #fff0f1; color: #c34c57; }
+
+.taskflow-recent-copy { min-width: 0; padding-top: 1px; }
+.taskflow-recent-copy a,
+.taskflow-recent-copy strong {
+    display: block;
+    overflow: hidden;
+    color: #344054 !important;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.taskflow-recent-copy a:hover { color: #4d59d8 !important; }
+.taskflow-recent-copy span { display: block; margin-top: 3px; color: #97a0af; font-size: 9.5px; }
+.taskflow-empty { padding: 28px 18px; text-align: center; color: #8a94a5; font-size: 11px; }
+
+/* Standard admin pages */
+.module,
+.inline-group,
+#changelist-filter,
+.submit-row,
+.selector-available,
+.selector-chosen {
+    border: 1px solid #e2e7f0 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 8px 26px rgba(27, 39, 69, .035);
+}
+.module { overflow: hidden; }
+.module caption,
+.module h2,
+.inline-group h2 {
+    padding: 13px 16px !important;
+    background: #f8f9fc !important;
+    color: #445067 !important;
+    font-size: 11px !important;
+    font-weight: 750 !important;
+}
+.module caption a { color: #445067 !important; }
+.module table th, .module table td { padding: 12px 14px; border-bottom-color: #edf0f5 !important; }
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+    min-height: 38px;
+    padding: 8px 14px;
+    border: 0 !important;
+    border-radius: 9px !important;
+    background: #5b67ee !important;
+    color: #fff !important;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    box-shadow: none !important;
+}
+.button:hover,
+input[type=submit]:hover,
+input[type=button]:hover,
+.submit-row input:hover,
+a.button:hover { background: #4753d8 !important; }
+.deletelink, .deletelink-box .deletelink { background: #d95864 !important; color: #fff !important; }
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=number],
+input[type=tel],
+textarea,
+select,
+.vTextField {
+    min-height: 40px;
+    padding: 8px 10px !important;
+    border: 1px solid #dce1ea !important;
+    border-radius: 9px !important;
+    background: #fff !important;
+    color: #253047 !important;
+    font-family: inherit;
+    outline: none;
+}
+textarea { min-height: 96px; }
+input:focus, textarea:focus, select:focus, .vTextField:focus {
+    border-color: #9da6ff !important;
+    box-shadow: 0 0 0 3px rgba(91, 103, 238, .10) !important;
+}
+
+.form-row { padding: 15px 18px !important; border-bottom-color: #edf0f5 !important; }
+.form-row label { color: #596377 !important; font-weight: 650 !important; }
+.help, p.help, form p.help, div.help, form div.help, div.help li { color: #8b95a6 !important; font-size: 10px !important; }
+
+.object-tools { margin-top: -44px; }
+.object-tools a,
+.object-tools a:link,
+.object-tools a:visited {
+    padding: 8px 12px !important;
+    border-radius: 9px !important;
+    background: #eef0ff !important;
+    color: #4d59d8 !important;
+    font-size: 10px !important;
+    font-weight: 750 !important;
+}
+.object-tools a:hover { background: #dfe3ff !important; }
+
+#changelist .actions { padding: 10px 12px !important; border-radius: 10px; background: #f8f9fc !important; }
+#changelist table { border: 1px solid #e2e7f0; border-radius: 12px; overflow: hidden; background: #fff; }
+#changelist table thead th { background: #f8f9fc !important; color: #596377 !important; font-size: 10px; text-transform: uppercase; letter-spacing: .03em; }
+#changelist table tbody tr:hover { background: #fafbff !important; }
+#changelist-filter { overflow: hidden; }
+#changelist-filter h2 { background: #f8f9fc !important; color: #4d586e !important; }
+#changelist-filter h3 { font-size: 11px; }
+#changelist-filter a.selected { color: #4d59d8 !important; font-weight: 700; }
+.paginator { color: #7e899b !important; font-size: 11px; }
+
+.messagelist { padding: 0 28px; }
+ul.messagelist li {
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    border: 1px solid #dfe5f2;
+    border-radius: 10px;
+    background: #f7f9ff !important;
+    color: #445067 !important;
+    font-size: 11px;
+}
+
+/* Login / logout */
+body.login.taskflow-login {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(91,103,238,.10), transparent 28%),
+        radial-gradient(circle at 90% 85%, rgba(91,103,238,.08), transparent 26%),
+        #f4f6fb !important;
+}
+
+body.login.taskflow-login #container {
+    width: min(440px, calc(100% - 28px));
+    min-width: 0;
+    margin: 7vh auto 0;
+    border: 1px solid #e1e6ef;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 28px 75px rgba(34, 46, 77, .11);
+    overflow: hidden;
+}
+
+body.login.taskflow-login #header {
+    min-height: auto;
+    justify-content: center;
+    padding: 26px 28px 16px;
+    border: 0;
+    box-shadow: none;
+}
+body.login.taskflow-login #branding { min-width: 0; width: 100%; justify-content: center; }
+body.login.taskflow-login .taskflow-admin-logo { justify-content: center; }
+body.login.taskflow-login #content { padding: 0 30px 30px; }
+body.login.taskflow-login #content-main { width: 100%; }
+
+.taskflow-login-card { width: 100%; }
+.taskflow-login-heading { margin: 5px 0 22px; text-align: center; }
+.taskflow-login-badge {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    background: #eef0ff;
+    color: #5360df;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+.taskflow-login-heading h1 { margin: 0 0 6px !important; font-size: 23px !important; }
+.taskflow-login-heading p { margin: 0; color: #7f899a; font-size: 11px; line-height: 1.55; }
+
+body.login.taskflow-login .form-row { padding: 0 0 15px !important; border: 0 !important; }
+body.login.taskflow-login .form-row label { display: block; margin-bottom: 7px; color: #4f5b70 !important; font-size: 11px; }
+body.login.taskflow-login .form-row input { width: 100%; min-height: 44px; }
+body.login.taskflow-login .submit-row { padding: 3px 0 0 !important; border: 0 !important; box-shadow: none; }
+body.login.taskflow-login .submit-row input { width: 100%; min-height: 45px; font-size: 12px; }
+body.login.taskflow-login .errornote { margin: 0 0 17px; padding: 11px 13px; border: 1px solid #ffd7dc; border-radius: 9px; background: #fff2f3; color: #ad4450; font-size: 10.5px; }
+
+.taskflow-login-back { display: block; margin-top: 17px; color: #7b8597 !important; text-align: center; font-size: 10.5px; font-weight: 600; text-decoration: none; }
+.taskflow-login-back:hover { color: #4d59d8 !important; }
+.taskflow-login-button { display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 10px; background: #5b67ee; color: #fff !important; font-size: 11px; font-weight: 700; text-decoration: none; }
+.taskflow-login-button:hover { background: #4753d8; }
+.taskflow-logout-card { text-align: center; }
+.taskflow-logout-icon { width: 52px; height: 52px; display: grid; place-items: center; margin: 2px auto 14px; border-radius: 16px; background: #edf8f3; color: #2d966d; font-size: 22px; font-weight: 800; }
+
+@media (max-width: 1050px) {
+    #header { padding: 0 20px; }
+    #content { padding: 20px 20px 36px; }
+    div.breadcrumbs, .messagelist { padding-left: 20px; padding-right: 20px; }
+    .taskflow-dashboard-grid { grid-template-columns: 1fr; }
+    .taskflow-recent-panel { max-width: none; }
+}
+
+@media (max-width: 767px) {
+    #header {
+        min-height: auto;
+        padding: 14px 15px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 11px;
+    }
+    #branding, .taskflow-admin-brand { width: 100%; min-width: 0; }
+    .taskflow-admin-links { margin: 0; }
+    #user-tools { order: 3; width: 100%; margin: 0; padding: 0; text-align: left; }
+    div.breadcrumbs { padding: 10px 15px; overflow-x: auto; white-space: nowrap; }
+    #content { padding: 14px 15px 28px; }
+    #content h1 { font-size: 21px; }
+
+    .taskflow-welcome { align-items: flex-start; flex-direction: column; padding: 20px; }
+    .taskflow-welcome h1 { font-size: 22px !important; }
+    .taskflow-open-app { width: 100%; justify-content: center; }
+    .taskflow-model-row { align-items: flex-start; flex-direction: column; }
+    .taskflow-model-actions { width: 100%; justify-content: flex-start; padding-left: 16px; }
+
+    .object-tools { float: none; margin: 0 0 14px; padding: 0; }
+    .object-tools li { float: none; margin: 0 6px 6px 0; }
+    .form-row { padding: 13px 14px !important; }
+    .form-row > div, .form-row .flex-container { display: block; }
+    .form-row label { display: block; width: 100%; margin-bottom: 6px; }
+    input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], textarea, select, .vTextField { max-width: 100%; }
+    #changelist .actions { display: flex; flex-wrap: wrap; gap: 7px; }
+    #changelist .results { overflow-x: auto; }
+    #changelist table { min-width: 690px; }
+    .submit-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px !important; }
+    .submit-row input, .submit-row a, .submit-row p { margin: 0 !important; }
+
+    body.login.taskflow-login #container { margin-top: 4vh; }
+    body.login.taskflow-login #header { padding: 22px 20px 12px; }
+    body.login.taskflow-login #content { padding: 0 22px 24px; }
+}
+
+@media (max-width: 480px) {
+    .taskflow-brand-copy small { display: none; }
+    .taskflow-admin-logo-mark { width: 38px; height: 38px; border-radius: 11px; }
+    .taskflow-admin-links a { min-height: 34px; padding: 0 10px; }
+    .taskflow-welcome { border-radius: 14px; }
+    .taskflow-panel { border-radius: 14px; }
+    body.login.taskflow-login #container { width: calc(100% - 20px); margin-top: 14px; border-radius: 18px; }
+    body.login.taskflow-login #content { padding-left: 18px; padding-right: 18px; }
+}
+
+/* Day / night mode */
+.taskflow-admin-links {
+    gap: 8px;
+}
+
+.taskflow-theme-switch {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 12px;
+    border: 1px solid #dde3ed;
+    border-radius: 10px;
+    background: #f8f9fc;
+    color: #344054;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .18s ease;
+}
+
+.taskflow-theme-switch:hover {
+    border-color: #cfd5ff;
+    background: #f0f2ff;
+    color: #4e5bd8;
+}
+
+html[data-theme="dark"] {
+    --primary: #7d88ff;
+    --secondary: #171d29;
+    --accent: #9aa3ff;
+    --primary-fg: #f5f7fb;
+    --body-fg: #e8edf5;
+    --body-bg: #0f131b;
+    --body-quiet-color: #9ca6b7;
+    --body-loud-color: #f6f8fb;
+    --header-color: #f6f8fb;
+    --header-branding-color: #ffffff;
+    --header-bg: #151a24;
+    --header-link-color: #c8d0dd;
+    --breadcrumbs-fg: #aab3c2;
+    --breadcrumbs-link-fg: #929bff;
+    --link-fg: #929bff;
+    --link-hover-color: #b0b7ff;
+    --link-selected-fg: #aab1ff;
+    --hairline-color: #2a3140;
+    --border-color: #2d3544;
+    --darkened-bg: #181e29;
+    --selected-bg: #222941;
+    --selected-row: #1b2230;
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] #container {
+    background: #0f131b !important;
+    color: #e7ecf4 !important;
+}
+
+html[data-theme="dark"] #header {
+    background: #151a24 !important;
+    border-bottom-color: #29303e;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .18);
+    color: #e8edf5 !important;
+}
+
+html[data-theme="dark"] .taskflow-admin-logo,
+html[data-theme="dark"] .taskflow-brand-copy strong {
+    color: #f2f5fa !important;
+}
+
+html[data-theme="dark"] .taskflow-brand-copy small,
+html[data-theme="dark"] #user-tools {
+    color: #96a0b1 !important;
+}
+
+html[data-theme="dark"] #user-tools strong {
+    color: #dce3ed !important;
+}
+
+html[data-theme="dark"] #user-tools a,
+html[data-theme="dark"] #user-tools button {
+    color: #9ea7ff !important;
+}
+
+html[data-theme="dark"] .taskflow-admin-links a,
+html[data-theme="dark"] .taskflow-theme-switch {
+    background: #1b2230;
+    border-color: #303849;
+    color: #cbd3df !important;
+}
+
+html[data-theme="dark"] .taskflow-admin-links a:hover,
+html[data-theme="dark"] .taskflow-theme-switch:hover {
+    background: #252c43;
+    border-color: #4c5680;
+    color: #aab2ff !important;
+}
+
+html[data-theme="dark"] div.breadcrumbs {
+    color: #929baa !important;
+}
+
+html[data-theme="dark"] #content h1,
+html[data-theme="dark"] #content h2,
+html[data-theme="dark"] #content h3 {
+    color: #edf2f8 !important;
+}
+
+html[data-theme="dark"] .taskflow-welcome,
+html[data-theme="dark"] .taskflow-panel,
+html[data-theme="dark"] .taskflow-app-group,
+html[data-theme="dark"] .module,
+html[data-theme="dark"] #changelist table,
+html[data-theme="dark"] body.login.taskflow-login #container {
+    background: #171c27 !important;
+    border-color: #2b3342 !important;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, .18);
+}
+
+html[data-theme="dark"] .taskflow-welcome {
+    background: linear-gradient(135deg, #171c27 0%, #1a2030 100%) !important;
+}
+
+html[data-theme="dark"] .taskflow-panel-heading,
+html[data-theme="dark"] .taskflow-app-title-row,
+html[data-theme="dark"] .module caption,
+html[data-theme="dark"] .module h2,
+html[data-theme="dark"] .inline-group h2,
+html[data-theme="dark"] #changelist table thead th,
+html[data-theme="dark"] #changelist .actions,
+html[data-theme="dark"] #changelist-filter h2 {
+    background: #1b2230 !important;
+    border-color: #2c3444 !important;
+    color: #cbd3df !important;
+}
+
+html[data-theme="dark"] .taskflow-panel-heading p,
+html[data-theme="dark"] .taskflow-welcome p,
+html[data-theme="dark"] .taskflow-app-title-row span,
+html[data-theme="dark"] .taskflow-recent-copy span,
+html[data-theme="dark"] .help,
+html[data-theme="dark"] p.help,
+html[data-theme="dark"] div.help,
+html[data-theme="dark"] .paginator {
+    color: #919bac !important;
+}
+
+html[data-theme="dark"] .taskflow-model-row + .taskflow-model-row,
+html[data-theme="dark"] .taskflow-recent-item + .taskflow-recent-item,
+html[data-theme="dark"] .taskflow-panel-heading,
+html[data-theme="dark"] .taskflow-app-title-row,
+html[data-theme="dark"] .form-row {
+    border-color: #29313f !important;
+}
+
+html[data-theme="dark"] .taskflow-model-row:hover,
+html[data-theme="dark"] #changelist table tbody tr:hover {
+    background: #1d2430 !important;
+}
+
+html[data-theme="dark"] .taskflow-model-info a,
+html[data-theme="dark"] .taskflow-model-info > span:last-child,
+html[data-theme="dark"] .taskflow-recent-copy a,
+html[data-theme="dark"] .taskflow-recent-copy strong {
+    color: #dce3ed !important;
+}
+
+html[data-theme="dark"] .taskflow-action,
+html[data-theme="dark"] .object-tools a,
+html[data-theme="dark"] .object-tools a:link,
+html[data-theme="dark"] .object-tools a:visited {
+    background: #202737 !important;
+    border-color: #343d4f !important;
+    color: #b8c0d1 !important;
+}
+
+html[data-theme="dark"] .taskflow-action-add {
+    background: #252c4b !important;
+    border-color: #3d4772 !important;
+    color: #aab2ff !important;
+}
+
+html[data-theme="dark"] input[type=text],
+html[data-theme="dark"] input[type=password],
+html[data-theme="dark"] input[type=email],
+html[data-theme="dark"] input[type=url],
+html[data-theme="dark"] input[type=number],
+html[data-theme="dark"] input[type=tel],
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
+html[data-theme="dark"] .vTextField {
+    background: #111722 !important;
+    border-color: #333c4d !important;
+    color: #e8edf5 !important;
+}
+
+html[data-theme="dark"] .form-row label {
+    color: #bbc4d2 !important;
+}
+
+html[data-theme="dark"] ul.messagelist li {
+    background: #1a2232 !important;
+    border-color: #303a4d;
+    color: #cbd4e1 !important;
+}
+
+html[data-theme="dark"] body.login.taskflow-login {
+    background:
+        radial-gradient(circle at 15% 10%, rgba(116,128,255,.11), transparent 28%),
+        radial-gradient(circle at 90% 85%, rgba(116,128,255,.08), transparent 26%),
+        #0f131b !important;
+}
+
+html[data-theme="dark"] body.login.taskflow-login #header {
+    background: #171c27 !important;
+}
+
+html[data-theme="dark"] .taskflow-login-heading p,
+html[data-theme="dark"] .taskflow-login-back {
+    color: #98a2b2 !important;
+}
+
+html[data-theme="dark"] .taskflow-login-badge {
+    background: #252c4b;
+    color: #aeb5ff;
+}
+
+@media (max-width: 767px) {
+    .taskflow-admin-links {
+        flex-wrap: wrap;
+    }
+
+    .taskflow-theme-switch {
+        min-height: 34px;
+        padding: 0 10px;
+    }
+}
+
+/* Logged out page */
+.taskflow-logged-out .taskflow-logout-card {
+    padding-top: 4px;
+}
+
+.taskflow-logout-actions {
+    margin-top: 4px;
+}
+
+.taskflow-logged-out .taskflow-logout-icon {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 16px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(45, 150, 109, .12);
+}
+
+.taskflow-logged-out .taskflow-login-button {
+    transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.taskflow-logged-out .taskflow-login-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(91, 103, 238, .20);
+}
+
+html[data-theme="dark"] .taskflow-logged-out .taskflow-logout-icon {
+    background: #19352d;
+    color: #71d6ad;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .16);
+}
+
+@media (max-width: 480px) {
+    .taskflow-logged-out .taskflow-logout-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+    }
+}
+
+/* Responsive admin header */
+html,
+body {
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+#container {
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+}
+
+/*
+   Keep the admin header predictable at every width.
+   Django's default header is flex based, so this section resets it to a
+   simple grid instead of stacking several flex rules on top of each other.
+*/
+#header {
+    width: 100%;
+    height: auto !important;
+    min-height: 74px !important;
+    display: grid !important;
+    grid-template-columns: minmax(220px, auto) minmax(0, 1fr) auto;
+    grid-template-areas: "brand user links";
+    align-items: center !important;
+    justify-content: stretch !important;
+    gap: 12px 22px !important;
+    padding: 12px 28px !important;
+}
+
+#header > * {
+    min-width: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+#branding {
+    grid-area: brand;
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center;
+    margin: 0 !important;
+}
+
+.taskflow-admin-brand {
+    width: auto;
+    min-width: 0;
+}
+
+.taskflow-admin-logo {
+    min-width: 0;
+}
+
+#user-tools {
+    grid-area: user;
+    width: auto !important;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-self: center;
+    justify-self: end;
+    text-align: right !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.55;
+}
+
+.taskflow-admin-links {
+    grid-area: links;
+    width: auto;
+    min-width: max-content;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-self: end;
+    white-space: nowrap;
+}
+
+.taskflow-theme-switch,
+.taskflow-admin-links a {
+    flex: 0 0 auto;
+}
+
+/* Medium windows: brand and controls stay on the first row,
+   account links get their own compact row without creating tall empty space. */
+@media (max-width: 1040px) {
+    #header {
+        min-height: 0 !important;
+        grid-template-columns: minmax(210px, 1fr) auto;
+        grid-template-areas:
+            "brand links"
+            "user user";
+        gap: 8px 16px !important;
+        padding: 11px 20px !important;
+    }
+
+    #user-tools {
+        width: 100% !important;
+        justify-self: stretch;
+        text-align: left !important;
+        font-size: 10.5px;
+    }
+
+    .taskflow-admin-links {
+        min-width: 0;
+    }
+}
+
+/* Tablet / narrow browser windows */
+@media (max-width: 700px) {
+    #header {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "brand"
+            "links"
+            "user";
+        gap: 10px !important;
+        padding: 12px 15px !important;
+    }
+
+    #branding,
+    .taskflow-admin-brand,
+    .taskflow-admin-logo {
+        width: 100% !important;
+    }
+
+    .taskflow-admin-links {
+        width: 100%;
+        min-width: 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        justify-self: stretch;
+    }
+
+    .taskflow-theme-switch,
+    .taskflow-admin-links a {
+        width: 100%;
+        min-width: 0;
+        min-height: 38px;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #user-tools {
+        width: 100% !important;
+        justify-self: stretch;
+        text-align: left !important;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    div.breadcrumbs {
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: thin;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    #header {
+        gap: 9px !important;
+        padding: 11px 12px !important;
+    }
+
+    .taskflow-admin-logo-mark {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        border-radius: 11px;
+    }
+
+    .taskflow-brand-copy strong {
+        font-size: 16px;
+    }
+
+    .taskflow-brand-copy small {
+        display: block;
+        margin-top: 3px;
+        font-size: 10px;
+    }
+
+    .taskflow-admin-links {
+        grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    }
+
+    .taskflow-theme-switch,
+    .taskflow-admin-links a {
+        min-height: 36px;
+        font-size: 10px;
+    }
+
+    #user-tools {
+        font-size: 9.5px;
+    }
+
+    #content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    div.breadcrumbs,
+    .messagelist {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+/* Very small phones: keep every control visible instead of letting it overflow. */
+@media (max-width: 360px) {
+    .taskflow-admin-links {
+        grid-template-columns: 1fr;
+    }
+
+    .taskflow-brand-copy small {
+        display: none;
+    }
+}
+
+/* Full-height dark background, including short admin pages. */
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #container {
+    width: 100%;
+    min-height: 100%;
+    background: #0f131b !important;
+}
+
+html[data-theme="dark"] #container {
+    min-height: 100vh;
+}
+
+/* ---------------------------------------------------------
+   Final responsive admin navigation
+   Small screens use one compact hamburger drawer instead of
+   wrapping the admin links into multiple rows.
+   --------------------------------------------------------- */
+
+.taskflow-menu-button,
+.taskflow-mobile-drawer,
+.taskflow-drawer-backdrop {
+    display: none;
+}
+
+/* The dashboard already has its own title inside the welcome card. */
+.taskflow-dashboard #content > h1 {
+    display: none !important;
+}
+
+#header {
+    position: relative;
+    z-index: 40;
+}
+
+#content {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 900px) {
+    #header {
+        width: 100% !important;
+        min-height: 70px !important;
+        height: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        gap: 12px !important;
+        padding: 12px 16px !important;
+    }
+
+    #branding {
+        flex: 1 1 auto !important;
+        width: auto !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+
+    .taskflow-admin-brand,
+    .taskflow-admin-logo {
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+    .taskflow-admin-logo {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    /* Desktop admin links are replaced by the drawer on narrow screens. */
+    #user-tools,
+    .taskflow-admin-links {
+        display: none !important;
+    }
+
+    .taskflow-menu-button {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 0;
+        border: 1px solid #dde3ed;
+        border-radius: 11px;
+        background: #f8f9fc;
+        cursor: pointer;
+    }
+
+    .taskflow-menu-button span {
+        width: 18px;
+        height: 2px;
+        display: block;
+        border-radius: 999px;
+        background: #344054;
+        transition: transform .18s ease, opacity .18s ease;
+    }
+
+    .taskflow-menu-button[aria-expanded="true"] span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .taskflow-menu-button[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .taskflow-menu-button[aria-expanded="true"] span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .taskflow-drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 9997;
+        display: block;
+        visibility: hidden;
+        background: rgba(15, 19, 27, .48);
+        opacity: 0;
+        transition: opacity .2s ease, visibility .2s ease;
+    }
+
+    .taskflow-drawer-backdrop.is-open {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .taskflow-mobile-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9998;
+        width: min(330px, 86vw);
+        display: flex;
+        flex-direction: column;
+        padding: 18px;
+        background: #ffffff;
+        border-left: 1px solid #e2e7f0;
+        box-shadow: -18px 0 48px rgba(28, 37, 57, .14);
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform .22s ease, visibility .22s ease;
+    }
+
+    .taskflow-mobile-drawer.is-open {
+        visibility: visible;
+        transform: translateX(0);
+    }
+
+    .taskflow-drawer-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 3px 2px 16px;
+        border-bottom: 1px solid #edf0f5;
+    }
+
+    .taskflow-drawer-head strong,
+    .taskflow-drawer-head small {
+        display: block;
+    }
+
+    .taskflow-drawer-head strong {
+        color: #1f2937;
+        font-size: 15px;
+    }
+
+    .taskflow-drawer-head small {
+        margin-top: 3px;
+        color: #8791a3;
+        font-size: 10px;
+    }
+
+    .taskflow-drawer-close {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 36px;
+        padding: 0;
+        border: 1px solid #e1e6ef;
+        border-radius: 10px;
+        background: #f8f9fc;
+        color: #4b5563;
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .taskflow-drawer-actions {
+        display: grid;
+        gap: 8px;
+        padding-top: 16px;
+    }
+
+    .taskflow-drawer-link {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid #e1e6ef;
+        border-radius: 10px;
+        background: #f8f9fc;
+        color: #344054 !important;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 700;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+
+    .taskflow-drawer-link:hover {
+        border-color: #cfd5ff;
+        background: #f0f2ff;
+        color: #4e5bd8 !important;
+    }
+
+    .taskflow-drawer-logout {
+        margin: 0;
+    }
+
+    .taskflow-drawer-logout-button {
+        color: #b54752 !important;
+    }
+
+    body.taskflow-menu-open {
+        overflow: hidden;
+    }
+
+    .taskflow-dashboard #content {
+        padding-top: 16px !important;
+    }
+
+    .taskflow-welcome {
+        margin-top: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #header {
+        min-height: 64px !important;
+        padding: 10px 12px !important;
+    }
+
+    .taskflow-admin-logo-mark {
+        width: 38px !important;
+        height: 38px !important;
+        flex: 0 0 38px !important;
+    }
+
+    .taskflow-brand-copy strong {
+        font-size: 15px !important;
+    }
+
+    .taskflow-brand-copy small {
+        display: block !important;
+        font-size: 9.5px !important;
+    }
+
+    .taskflow-menu-button {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .taskflow-mobile-drawer {
+        width: min(300px, 90vw);
+        padding: 15px;
+    }
+
+    .taskflow-dashboard #content {
+        padding: 12px !important;
+    }
+
+    .taskflow-welcome {
+        padding: 18px !important;
+    }
+
+    .taskflow-welcome h1 {
+        font-size: 21px !important;
+        line-height: 1.2;
+    }
+}
+
+html[data-theme="dark"] .taskflow-menu-button {
+    background: #1b2230;
+    border-color: #303849;
+}
+
+html[data-theme="dark"] .taskflow-menu-button span {
+    background: #d8deea;
+}
+
+html[data-theme="dark"] .taskflow-mobile-drawer {
+    background: #151a24;
+    border-left-color: #2c3444;
+    box-shadow: -18px 0 48px rgba(0, 0, 0, .28);
+}
+
+html[data-theme="dark"] .taskflow-drawer-head {
+    border-bottom-color: #2a3241;
+}
+
+html[data-theme="dark"] .taskflow-drawer-head strong {
+    color: #f1f4f8;
+}
+
+html[data-theme="dark"] .taskflow-drawer-head small {
+    color: #97a1b2;
+}
+
+html[data-theme="dark"] .taskflow-drawer-close,
+html[data-theme="dark"] .taskflow-drawer-link {
+    background: #1b2230;
+    border-color: #303849;
+    color: #d4dbe6 !important;
+}
+
+html[data-theme="dark"] .taskflow-drawer-link:hover {
+    background: #252c43;
+    border-color: #4c5680;
+    color: #aeb5ff !important;
+}
+
+html[data-theme="dark"] .taskflow-drawer-logout-button {
+    color: #ff9ba4 !important;
+}
+
+/* Final mobile hamburger alignment: keep the menu at the far right. */
+@media (max-width: 900px) {
+    #branding {
+        position: relative !important;
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        padding-right: 56px !important;
+    }
+
+    .taskflow-menu-button {
+        position: absolute !important;
+        top: 50% !important;
+        right: 0 !important;
+        margin: 0 !important;
+        transform: translateY(-50%) !important;
+        z-index: 3;
+    }
+}
+
+@media (max-width: 480px) {
+    #branding {
+        padding-right: 52px !important;
+    }
+}

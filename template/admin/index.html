@@ -1,0 +1,105 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static log %}
+
+{% block coltype %}colMS{% endblock %}
+{% block bodyclass %}{{ block.super }} dashboard taskflow-dashboard{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div id="content-main" class="taskflow-dashboard-main">
+    <section class="taskflow-welcome">
+        <div>
+            <span class="taskflow-eyebrow">ADMIN DASHBOARD</span>
+            <h1>Manage your ToDo application</h1>
+            <p>Manage tasks, users and application settings from one clean dashboard.</p>
+        </div>
+        <a class="taskflow-open-app" href="{% url 'tasks' %}">Open ToDo App <span>→</span></a>
+    </section>
+
+    <div class="taskflow-dashboard-grid">
+        <section class="taskflow-panel taskflow-app-panel">
+            <div class="taskflow-panel-heading">
+                <div>
+                    <h2>Application management</h2>
+                    <p>Choose a section to view or update its data.</p>
+                </div>
+            </div>
+
+            <div class="taskflow-app-list">
+                {% if app_list %}
+                    {% for app in app_list %}
+                    <div class="taskflow-app-group">
+                        <div class="taskflow-app-title-row">
+                            <div class="taskflow-app-icon">{{ app.name|slice:":1" }}</div>
+                            <div>
+                                <h3>{{ app.name }}</h3>
+                                <span>{{ app.models|length }} section{{ app.models|length|pluralize }}</span>
+                            </div>
+                        </div>
+
+                        <div class="taskflow-model-list">
+                            {% for model in app.models %}
+                            <div class="taskflow-model-row">
+                                <div class="taskflow-model-info">
+                                    <span class="taskflow-model-dot"></span>
+                                    {% if model.admin_url %}
+                                    <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                                    {% else %}
+                                    <span>{{ model.name }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="taskflow-model-actions">
+                                    {% if model.add_url %}
+                                    <a class="taskflow-action taskflow-action-add" href="{{ model.add_url }}">+ Add</a>
+                                    {% endif %}
+                                    {% if model.admin_url and show_changelinks %}
+                                    <a class="taskflow-action" href="{{ model.admin_url }}">Manage</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="taskflow-empty">You do not have permission to view or edit anything.</div>
+                {% endif %}
+            </div>
+        </section>
+
+        <aside class="taskflow-panel taskflow-recent-panel">
+            <div class="taskflow-panel-heading">
+                <div>
+                    <h2>Recent activity</h2>
+                    <p>Your latest admin actions.</p>
+                </div>
+            </div>
+
+            {% get_admin_log 7 as admin_log for_user user %}
+            <div class="taskflow-recent-list">
+                {% if admin_log %}
+                    {% for entry in admin_log %}
+                    <div class="taskflow-recent-item">
+                        <span class="taskflow-recent-icon {% if entry.is_addition %}is-add{% elif entry.is_change %}is-change{% else %}is-delete{% endif %}">
+                            {% if entry.is_addition %}+{% elif entry.is_change %}✎{% else %}−{% endif %}
+                        </span>
+                        <div class="taskflow-recent-copy">
+                            {% if entry.is_deletion or not entry.get_admin_url %}
+                                <strong>{{ entry.object_repr }}</strong>
+                            {% else %}
+                                <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                            {% endif %}
+                            <span>{{ entry.content_type.name|capfirst }} · {{ entry.action_time|timesince }} ago</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="taskflow-empty">No recent activity yet.</div>
+                {% endif %}
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}

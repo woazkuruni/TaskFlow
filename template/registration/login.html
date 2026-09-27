@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TaskFlow</title>
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/theme.js' %}"></script>
+</head>
+<body class="auth-page">
+    <main class="auth-shell">
+        <div class="auth-topbar">
+            <a href="{% url 'home' %}" class="auth-brand">
+                <span class="brand-icon"><i class="fa-solid fa-check"></i></span>
+                <span><strong>TaskFlow</strong><small>Personal task manager</small></span>
+            </a>
+            <div class="auth-top-actions"><a href="{% url 'home' %}" class="auth-home-link"><i class="fa-solid fa-house"></i><span>Home</span></a><button type="button" class="theme-switch" data-theme-toggle>
+                <span class="theme-switch-icon" data-theme-icon aria-hidden="true"></span>
+            </button></div>
+        </div>
+
+        <section class="auth-card">
+            <div class="auth-heading">
+                <span class="auth-badge">WELCOME BACK</span>
+                <h1>Sign in to TaskFlow</h1>
+                <p>Use your username or email to continue to your tasks.</p>
+            </div>
+
+            {% if messages %}
+            <div class="auth-messages">
+                {% for message in messages %}
+                <div class="auth-message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" class="auth-form">
+                {% csrf_token %}
+                <div class="auth-field">
+                    <label for="login">Username or email</label>
+                    <input id="login" type="text" name="login" autocomplete="username" placeholder="Enter username or email" required autofocus>
+                </div>
+                <div class="auth-field">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="auth-primary-btn">Sign In</button>
+            </form>
+
+            <p class="auth-switch">New to TaskFlow? <a href="{% url 'register' %}">Create an account</a></p>
+        </section>
+    </main>
+</body>
+</html>

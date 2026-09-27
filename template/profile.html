@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | TaskFlow</title>
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/theme.js' %}"></script>
+</head>
+<body>
+    <main class="page-shell profile-shell">
+        <header class="app-header profile-header">
+            <a href="{% url 'tasks' %}" class="brand brand-link">
+                <div class="brand-icon"><i class="fa-solid fa-check"></i></div>
+                <div><h1>TaskFlow</h1><p>Account &amp; reminder settings</p></div>
+            </a>
+            <div class="header-tools profile-tools">
+                <a href="{% url 'tasks' %}" class="header-icon-btn"><i class="fa-solid fa-arrow-left"></i><span>Back to Tasks</span></a>
+                <button type="button" class="theme-switch" data-theme-toggle><span class="theme-switch-icon" data-theme-icon aria-hidden="true"></span></button>
+            </div>
+        </header>
+
+        {% if messages %}
+        <div class="alert-wrap">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'secondary' }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <section class="profile-card">
+            <div class="profile-card-head">
+                <div class="profile-big-avatar">{{ request.user.username|first|upper }}</div>
+                <div>
+                    <span class="auth-badge">MY PROFILE</span>
+                    <h2>{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}</h2>
+                    <p>@{{ request.user.username }}</p>
+                </div>
+            </div>
+
+            <form method="POST" class="profile-form">
+                {% csrf_token %}
+                <div class="auth-field">
+                    <label for="full_name">Full name</label>
+                    <input id="full_name" type="text" name="full_name" value="{{ full_name }}" autocomplete="name">
+                </div>
+                <div class="auth-field">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email" value="{{ request.user.email }}" autocomplete="email" required>
+                    <small>Email reminders will be sent to this address when server-side email delivery is configured.</small>
+                </div>
+
+                <label class="setting-row" for="email_reminders">
+                    <span>
+                        <strong>Email reminders</strong>
+                        <small>Allow TaskFlow to send due-task reminder emails.</small>
+                    </span>
+                    <input id="email_reminders" type="checkbox" name="email_reminders" {% if profile.email_reminders %}checked{% endif %}>
+                </label>
+
+                <div class="profile-actions">
+                    <button type="submit" class="auth-primary-btn">Save Profile</button>
+                    <a href="{% url 'logout' %}" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

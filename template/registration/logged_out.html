@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block bodyclass %}{{ block.super }} login taskflow-login taskflow-logged-out{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+
+{% block nav-global %}
+<div class="taskflow-admin-links taskflow-login-tools">
+    <button type="button" class="taskflow-theme-switch" data-theme-toggle>
+        <span data-theme-icon>☾</span>
+        <span data-theme-text>Night</span>
+    </button>
+</div>
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="taskflow-login-card taskflow-logout-card">
+    <div class="taskflow-logout-icon">✓</div>
+
+    <div class="taskflow-login-heading">
+        <span class="taskflow-login-badge">SIGNED OUT</span>
+        <h1>Logged out successfully</h1>
+        <p>Your admin session has ended safely. You can sign in again whenever you need to manage your tasks.</p>
+    </div>
+
+    <div class="taskflow-logout-actions">
+        <a class="taskflow-login-button" href="{% url 'admin:login' %}">Log in again</a>
+        <a class="taskflow-login-back" href="{% url 'home' %}">← Back to ToDo App</a>
+    </div>
+</div>
+{% endblock %}

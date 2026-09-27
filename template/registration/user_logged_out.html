@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signed Out | TaskFlow</title>
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/theme.js' %}"></script>
+</head>
+<body class="auth-page">
+    <main class="auth-shell">
+        <div class="auth-topbar">
+            <a href="{% url 'home' %}" class="auth-brand">
+                <span class="brand-icon"><i class="fa-solid fa-check"></i></span>
+                <span><strong>TaskFlow</strong><small>Personal task manager</small></span>
+            </a>
+            <button type="button" class="theme-switch" data-theme-toggle>
+                <span class="theme-switch-icon" data-theme-icon aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <section class="auth-card auth-logout-card">
+            <div class="logout-mark"><i class="fa-solid fa-check"></i></div>
+            <div class="auth-heading">
+                <h1>You’re signed out</h1>
+                <p>Your TaskFlow session has ended safely.</p>
+            </div>
+            <a href="{% url 'login' %}" class="auth-primary-btn">Sign In Again</a>
+            <a href="{% url 'home' %}" class="auth-secondary-link">Back to Home</a>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block bodyclass %}{{ block.super }} login taskflow-login{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+{% block nav-global %}
+<div class="taskflow-admin-links taskflow-login-tools">
+    <button type="button" class="taskflow-theme-switch" data-theme-toggle>
+        <span data-theme-icon>☾</span>
+        <span data-theme-text>Night</span>
+    </button>
+</div>
+{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="taskflow-login-card">
+    <div class="taskflow-login-heading">
+        <span class="taskflow-login-badge">ADMIN ACCESS</span>
+        <h1>Welcome back</h1>
+        <p>Sign in to manage your TaskFlow application.</p>
+    </div>
+
+    {% if form.errors and not form.non_field_errors %}
+    <p class="errornote">Please enter the correct username and password.</p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="errornote">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+        <div class="form-row">
+            {{ form.username.errors }}
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-row">
+            {{ form.password.errors }}
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            <input type="hidden" name="next" value="{{ next }}">
+        </div>
+        <div class="submit-row">
+            <input type="submit" value="Sign in">
+        </div>
+    </form>
+
+    <a class="taskflow-login-back" href="{% url 'tasks' %}">← Back to ToDo App</a>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | TaskFlow Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin_custom.css' %}">
+<link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}">
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/admin_nav.js' %}" defer></script>
+{% endblock %}
+
+{% block branding %}
+<div class="taskflow-admin-brand">
+    <a href="{% url 'admin:index' %}" class="taskflow-admin-logo">
+        <span class="taskflow-admin-logo-mark">✓</span>
+        <span class="taskflow-brand-copy">
+            <strong>TaskFlow Admin</strong>
+            <small>ToDo management panel</small>
+        </span>
+    </a>
+</div>
+
+<button type="button" class="taskflow-menu-button" data-admin-menu-button aria-expanded="false" aria-controls="taskflow-mobile-drawer" aria-label="Open admin menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+{% endblock %}
+
+{% block nav-global %}
+<div class="taskflow-admin-links">
+    <button type="button" class="taskflow-theme-switch" data-theme-toggle>
+        <span data-theme-icon>☾</span>
+        <span data-theme-text>Night</span>
+    </button>
+    <a href="{% url 'tasks' %}">View ToDo App</a>
+</div>
+
+<div class="taskflow-drawer-backdrop" data-admin-menu-backdrop></div>
+<aside class="taskflow-mobile-drawer" id="taskflow-mobile-drawer" data-admin-menu aria-hidden="true">
+    <div class="taskflow-drawer-head">
+        <div>
+            <strong>Admin Menu</strong>
+            <small>{{ user.get_username }}</small>
+        </div>
+        <button type="button" class="taskflow-drawer-close" data-admin-menu-close aria-label="Close admin menu">×</button>
+    </div>
+
+    <div class="taskflow-drawer-actions">
+        <button type="button" class="taskflow-drawer-link" data-theme-toggle>
+            <span data-theme-icon>☾</span>
+            <span data-theme-text>Night</span> mode
+        </button>
+        <a class="taskflow-drawer-link" href="{% url 'tasks' %}">View ToDo App</a>
+        <a class="taskflow-drawer-link" href="{% url 'admin:index' %}">Admin Dashboard</a>
+        <a class="taskflow-drawer-link" href="{% url 'home' %}">View Site</a>
+        <a class="taskflow-drawer-link" href="{% url 'admin:password_change' %}">Change Password</a>
+
+        <form method="post" action="{% url 'admin:logout' %}" class="taskflow-drawer-logout">
+            {% csrf_token %}
+            <button type="submit" class="taskflow-drawer-link taskflow-drawer-logout-button">Log Out</button>
+        </form>
+    </div>
+</aside>
+{% endblock %}
