@@ -1,81 +1,289 @@
-# TaskFlow
+<div align="center">
 
-A simple Django ToDo project upgraded into a small multi-user task manager while keeping the original function-based project flow.
+# ✅ TaskFlow
 
-## Features
+### Smart Task Manager Web Application
 
-- Public landing page before login
-- Landing page changes actions for signed-in users
+A modern and responsive Django-based task manager for organizing daily tasks, managing deadlines, tracking progress, and staying updated with reminders.
 
-- User registration, login and logout
-- Login with username or email
-- User profile with name and email
-- Every user sees only their own tasks
-- Add, edit, complete, reopen and delete tasks
-- Due date and optional due time
-- Live countdown and overdue state
-- 15 minute, 1 hour and 1 day reminders
-- Browser/in-app reminder On/Off switch
-- Optional email reminders
-- Day/Night mode with saved browser preference
-- Responsive user interface
-- Custom responsive Django admin
+</div>
 
-## Run the project
+---
+
+## ✨ Overview
+
+**TaskFlow** is a personal task management web application developed with Django. It provides a simple and organized way to create tasks, set deadlines, monitor countdowns, receive reminders, and manage personal task activity from a responsive dashboard.
+
+The project also includes user authentication, profile management, light/dark theme support, email reminder functionality, and a customized Django Admin Panel.
+
+---
+
+## 🚀 Key Features
+
+- ✅ User Registration, Login, and Logout
+- 👤 Personal Profile Management
+- 📝 Add, Edit, Delete, Complete, and Reopen Tasks
+- 📅 Due Date and Due Time Management
+- ⏳ Live Countdown for Upcoming Tasks
+- ⚠️ Automatic Overdue Task Detection
+- 🔔 In-App and Browser Reminder Notifications
+- 📧 Email Reminder Support
+- 🔕 Reminder On/Off Control
+- 📊 Total, Pending, and Completed Task Statistics
+- 🔍 Search and Filter Tasks
+- 👥 User-Specific Task Management
+- 🌙 Light and Dark Theme Support
+- 📱 Responsive Design for Desktop, Tablet, and Mobile
+- 🖥️ Customized Django Admin Panel
+- 🏠 Public Landing Page with Login and Registration Options
+
+---
+
+## 💻 Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| 🐍 Python | Backend programming |
+| 🌿 Django | Web framework |
+| 🌐 HTML5 | Page structure |
+| 🎨 CSS3 | Styling and responsive design |
+| ⚡ JavaScript | Countdown, theme, reminder, and UI interaction |
+| 🗄️ SQLite | Database |
+
+---
+
+## 🧩 Main Components
+
+📦 Django Models • 👁️ Function-Based Views • 📄 Templates • 🔐 Authentication System • 👤 User Profile System • ⏰ Countdown & Reminder Logic • 📧 Email Notification Support • ⚙️ Customized Admin Panel • 🗄️ SQLite Database • 🌗 Theme Management • 📱 Responsive User Interface
+
+---
+
+## 📁 Project Structure
+
+```text
+TaskFlow/
+│
+├── manage.py
+├── requirements.txt
+├── README.md
+├── email_settings.example.txt
+│
+├── todo/
+│   ├── migrations/
+│   ├── admin.py
+│   ├── models.py
+│   ├── urls.py
+│   └── views.py
+│
+├── todo_main/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── template/
+│   ├── registration/
+│   ├── admin/
+│   └── ...
+│
+└── static/
+    ├── css/
+    ├── js/
+    └── ...
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/woazkuruni/TaskFlow.git
+cd TaskFlow
+```
+
+### 2. Create a virtual environment
 
 ```bash
 python -m venv env
+```
+
+### 3. Activate the virtual environment
+
+**Windows**
+```bash
 env\Scripts\activate
+```
+
+**Linux / macOS**
+```bash
+source env/bin/activate
+```
+
+### 4. Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
+
+### 5. Apply migrations
+
+```bash
 python manage.py migrate
+```
+
+### 6. Run the development server
+
+```bash
 python manage.py runserver
 ```
 
 Open:
 
-- Landing page: `http://127.0.0.1:8000/`
-- My Tasks: `http://127.0.0.1:8000/tasks/`
-- Admin: `http://127.0.0.1:8000/admin/`
-
-The existing database already contains the previous admin account and tasks. If the admin password is forgotten:
-
-```bash
-python manage.py changepassword admin
+```text
+http://127.0.0.1:8000/
 ```
 
-## Reminder switch
+---
 
-The **Reminders On / Reminders Off** button controls TaskFlow reminders in the current browser. Turning it off does not change the browser's notification permission; TaskFlow simply stops sending browser and in-app reminder alerts until it is turned on again.
+## 🔐 Admin Panel
 
-## Email reminders
+Create an admin account:
 
-Email reminders are enabled or disabled from the user's Profile page.
+```bash
+python manage.py createsuperuser
+```
 
-For local development, Django prints reminder emails in the terminal. To send real email, configure SMTP using the values shown in `email_settings.example.txt`.
+Then open:
 
-Run the reminder checker with:
+```text
+http://127.0.0.1:8000/admin/
+```
+
+---
+
+## 📧 Email Reminder Setup
+
+TaskFlow includes email reminder support.
+
+A sample configuration file is included:
+
+```text
+email_settings.example.txt
+```
+
+To check and send due-task reminders manually:
 
 ```bash
 python manage.py send_task_reminders
 ```
 
-For automatic delivery, schedule that command to run every minute using Windows Task Scheduler, cron, or another scheduler. This keeps the project lightweight without Celery/Redis.
+For automatic reminders, schedule the command using **Windows Task Scheduler**, **cron**, or another server-side scheduler.
 
-### Latest task-card polish
-- Countdown is shown on the right side of pending task cards on wider screens.
-- Long task names wrap safely without pushing the action buttons out of the card.
-- The hourglass icon uses a small flip/up-down animation while the countdown is active.
-- New tasks default to 09:00 AM when a due date is used; the user can change the time before saving.
+> Never upload real email passwords, app passwords, API keys, or `.env` files to a public repository.
 
-## Page flow
+---
 
-- `/` - public landing page
-- `/login/` - sign in
-- `/register/` - create an account
-- `/tasks/` - the signed-in user's task dashboard
-- `/profile/` - profile and email reminder preference
+## 🌗 Light & Dark Theme
 
-The same Day/Night preference is shared across the landing page, login, registration, profile and task dashboard.
+- Theme preference is saved in the browser
+- The selected theme remains active after refresh
+- Landing, login, register, profile, task, and edit pages use the same theme system
+- The initial theme can follow the device preference
 
-### Countdown animation
-The countdown keeps its place on the right side of wide task cards. Its hourglass has a small flip, vertical movement and sand-dot animation. Long task names wrap inside the available space instead of pushing the countdown or action buttons out of the card.
+---
+
+## ⏳ Countdown & Reminders
+
+TaskFlow displays a live countdown when a due date and due time are set.
+
+```text
+2d 5h 18m left
+```
+
+After the deadline:
+
+```text
+Overdue
+```
+
+Reminder options include:
+
+- 15 minutes before
+- 1 hour before
+- 1 day before
+
+---
+
+## 👥 User-Based Task Management
+
+Each registered user has a separate task workspace. Users can only view and manage their own tasks, reminders, deadlines, statistics, and profile information.
+
+---
+
+## 📱 Responsive Design
+
+The interface is designed for:
+
+- 💻 Desktop
+- 🖥️ Laptop
+- 📱 Tablet
+- 📲 Mobile
+
+---
+
+## 📸 Project Preview
+
+Add your TaskFlow screenshot or showcase banner here:
+
+```md
+![TaskFlow Preview](path/to/your/image.png)
+```
+
+---
+
+## 🔒 Security Notes
+
+Before publishing:
+
+```gitignore
+__pycache__/
+*.py[cod]
+
+env/
+venv/
+.venv/
+
+.env
+.env.*
+
+db.sqlite3
+db.sqlite3-journal
+
+*.log
+
+.idea/
+.vscode/
+
+.DS_Store
+Thumbs.db
+```
+
+---
+
+## 👨‍💻 Author
+
+**Wazkuruni**
+
+📧 wazkuruni.tech@gmail.com  
+💻 GitHub: `woazkuruni`
+
+---
+
+<div align="center">
+
+### ⭐ If you find this project useful, consider giving the repository a star.
+
+**Built with Django, JavaScript, and SQLite.**
+
+</div>
